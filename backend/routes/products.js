@@ -78,7 +78,7 @@ router.post('/', adminAuth, async (req, res) => {
     }
 
     // Validate category if provided
-    const validCategories = ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'foundation', 'lipstick', 'eyeshadow', 'mascara', 'blush', 'concealer', 'primer', 'setting_spray', 'treatment', 'other'];
+    const validCategories = ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'cream', 'eye_cream', 'vaseline', 'lip_balm', 'micellar_water', 'night_cream', 'oil', 'shampoo', 'lotion', 'peeling_gel', 'shower_gel', 'other'];
     if (req.body.category && !validCategories.includes(req.body.category)) {
       return res.status(400).json({ message: 'Invalid category' });
     }
@@ -175,7 +175,7 @@ router.patch('/:id/stock', adminAuth, async (req, res) => {
 
 // Get product categories
 router.get('/meta/categories', auth, (req, res) => {
-  const categories = ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'foundation', 'lipstick', 'eyeshadow', 'mascara', 'blush', 'concealer', 'primer', 'setting_spray', 'treatment', 'other'];
+  const categories = ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'cream', 'eye_cream', 'vaseline', 'lip_balm', 'micellar_water', 'night_cream', 'oil', 'shampoo', 'lotion', 'peeling_gel', 'shower_gel', 'other'];
   res.json(categories);
 });
 

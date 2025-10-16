@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     default: 'other',
-    enum: ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'foundation', 'lipstick', 'eyeshadow', 'mascara', 'blush', 'concealer', 'primer', 'setting_spray', 'treatment', 'other']
+    enum: ['serum', 'facewash', 'sunscreen', 'moisturizer', 'cleanser', 'toner', 'mask', 'cream', 'eye_cream', 'vaseline', 'lip_balm', 'micellar_water', 'night_cream', 'oil', 'shampoo', 'lotion', 'peeling_gel', 'shower_gel', 'other']
   },
   costPrice: {
     type: Number,
