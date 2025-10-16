@@ -94,7 +94,7 @@ Glowiva/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/YOUR_USERNAME/Glowiva.git
    cd Glowiva
    ```
 
@@ -112,12 +112,18 @@ Glowiva/
 
 4. **Environment Setup**
    
-   Create a `.env` file in the backend directory:
+   Create a `.env` file in the backend directory by copying the example:
+   ```bash
+   cd backend
+   cp .env.example .env
+   ```
+   
+   Then edit `.env` with your actual values:
    ```env
    NODE_ENV=development
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/glowiva
-   JWT_SECRET=your_jwt_secret_key_here
+   JWT_SECRET=your_secure_jwt_secret_key_here
    FRONTEND_URL=http://localhost:3000
    ```
 
