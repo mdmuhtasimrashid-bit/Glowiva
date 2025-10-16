@@ -17,7 +17,7 @@ export const productsAPI = {
   update: (id, data) => api.put(`/products/${id}`, data),
   delete: (id) => api.delete(`/products/${id}`),
   updateStock: (id, data) => api.patch(`/products/${id}/stock`, data),
-  getCategories: () => api.get('/products/meta/categories'),
+  getCategories: () => api.get(`/products/meta/categories?t=${Date.now()}`),
 };
 
 // Orders API
