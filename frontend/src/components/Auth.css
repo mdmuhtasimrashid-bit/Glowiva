@@ -10,7 +10,7 @@
     radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
   background-attachment: fixed;
-  padding: 40px 20px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
 }
@@ -34,15 +34,15 @@
 .auth-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.1),
     0 6px 20px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 40px;
+  padding: 32px 28px;
   width: 100%;
-  max-width: 420px;
+  max-width: 350px;
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
   overflow: hidden;
@@ -73,17 +73,17 @@
 
 .auth-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   position: relative;
 }
 
 .auth-header::after {
   content: '';
   position: absolute;
-  bottom: -16px;
+  bottom: -14px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
+  width: 40px;
   height: 2px;
   background: linear-gradient(90deg, #667eea, #764ba2);
   border-radius: 1px;
@@ -91,9 +91,9 @@
 
 .auth-header h2 {
   color: #1a1a1a;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -113,7 +113,7 @@
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -143,10 +143,10 @@
 }
 
 .form-group input {
-  padding: 16px 20px;
+  padding: 14px 16px;
   border: 2px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 15px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(248, 250, 252, 0.8);
   backdrop-filter: blur(10px);
@@ -175,16 +175,16 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 16px 28px;
-  border-radius: 14px;
-  font-size: 16px;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 12px;
+  margin-top: 8px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 6px 24px rgba(102, 126, 234, 0.25);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.25);
 }
 
 .auth-button::before {
@@ -289,9 +289,9 @@
 
 /* Toggle Section */
 .auth-toggle {
-  margin-top: 24px;
+  margin-top: 20px;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -366,47 +366,19 @@
 /* Responsive Design */
 @media (max-width: 600px) {
   .auth-container {
-    padding: 20px;
+    padding: 16px;
     align-items: center;
-    padding-top: 5vh;
   }
   
   .auth-card {
-    padding: 32px 24px;
-    max-width: 100%;
-    border-radius: 16px;
+    padding: 24px 20px;
+    max-width: 320px;
+    border-radius: 14px;
   }
   
   .form-row {
     grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .auth-header {
-    margin-bottom: 24px;
-  }
-  
-  .auth-header h2 {
-    font-size: 24px;
-  }
-  
-  .auth-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-}
-
-/* Additional responsive fixes for very small screens */
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 16px;
-    padding-top: 4vh;
-  }
-  
-  .auth-card {
-    padding: 28px 20px;
-    border-radius: 14px;
+    gap: 14px;
   }
   
   .auth-header {
@@ -417,13 +389,40 @@
     font-size: 22px;
   }
   
+  .auth-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+/* Additional responsive fixes for very small screens */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 12px;
+  }
+  
+  .auth-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+    max-width: 300px;
+  }
+  
+  .auth-header {
+    margin-bottom: 16px;
+  }
+  
+  .auth-header h2 {
+    font-size: 20px;
+  }
+  
   .form-group input {
     font-size: 16px; /* Prevents zoom on iOS */
-    padding: 14px 16px;
+    padding: 12px 14px;
   }
   
   .auth-button {
-    padding: 14px 24px;
+    padding: 12px 20px;
   }
 }
 
