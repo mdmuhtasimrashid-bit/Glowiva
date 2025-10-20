@@ -402,6 +402,7 @@ code {
 .main-content {
   padding-top: 100px;
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
 }
 
 /* Smooth scrolling */
@@ -475,32 +476,261 @@ html {
   animation: fadeIn 0.6s ease-out;
 }
 
+/* Tablet and Mobile Responsive Styles */
 @media (max-width: 768px) {
+  /* Container adjustments */
+  .container {
+    padding: 0 16px;
+    max-width: 100%;
+  }
+  
+  /* Main content mobile adjustments */
+  .main-content {
+    padding-top: 80px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  /* Grid system mobile */
   .col-md-6,
   .col-md-4,
   .col-md-3,
   .col-md-8 {
     flex: 0 0 100%;
     max-width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    padding: 0 8px;
   }
   
+  .row {
+    margin: 0 -8px;
+  }
+  
+  /* Card mobile optimizations */
+  .card {
+    padding: 20px 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card-title {
+    font-size: 16px;
+  }
+  
+  /* Button mobile styles */
+  .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    min-height: 44px; /* Touch target minimum */
+    touch-action: manipulation;
+  }
+  
+  .btn-sm {
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 36px;
+  }
+  
+  /* Form controls mobile */
+  .form-control {
+    padding: 12px 16px;
+    font-size: 16px; /* Prevents zoom on iOS */
+    border-radius: 10px;
+    min-height: 44px;
+  }
+  
+  .form-label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  /* Table mobile responsive */
   .table {
     font-size: 12px;
+    border-radius: 12px;
   }
   
   .table th,
   .table td {
-    padding: 12px 8px;
+    padding: 10px 8px;
+    font-size: 11px;
   }
   
+  .table th {
+    font-size: 10px;
+  }
+  
+  /* Badge mobile */
+  .badge {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+/* Mobile Phone Styles */
+@media (max-width: 480px) {
+  /* Container mobile */
+  .container {
+    padding: 0 12px;
+  }
+  
+  /* Main content mobile */
+  .main-content {
+    padding-top: 70px;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  
+  /* Grid mobile */
+  .row {
+    margin: 0 -4px;
+  }
+  
+  .col,
+  [class*="col-"] {
+    padding: 0 4px;
+    margin-bottom: 12px;
+  }
+  
+  /* Card mobile */
   .card {
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 16px 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
   }
   
+  .card-title {
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  
+  /* Buttons mobile */
   .btn {
     padding: 10px 16px;
     font-size: 13px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .btn-sm {
+    padding: 6px 10px;
+    font-size: 11px;
+    width: auto;
+    min-width: 80px;
+  }
+  
+  /* Form mobile */
+  .form-control {
+    padding: 10px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+  
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  /* Table mobile - horizontal scroll */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  }
+  
+  .table {
+    min-width: 500px; /* Forces horizontal scroll */
+    margin-bottom: 0;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px 6px;
+    white-space: nowrap;
+  }
+  
+  /* Typography mobile */
+  h1 {
+    font-size: 20px;
+  }
+  
+  h2 {
+    font-size: 18px;
+  }
+  
+  h3 {
+    font-size: 16px;
+  }
+  
+  h4 {
+    font-size: 14px;
+  }
+  
+  /* Badge mobile */
+  .badge {
+    padding: 3px 6px;
+    font-size: 9px;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 8px;
+  }
+  
+  .main-content {
+    padding-top: 65px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  
+  .card {
+    padding: 12px 8px;
+    border-radius: 10px;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .form-control {
+    padding: 8px 10px;
+    font-size: 16px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  .main-content {
+    padding-top: 60px;
+  }
+  
+  .card {
+    margin-bottom: 8px;
+    padding: 12px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  .form-control {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .btn:hover,
+  .card:hover,
+  .table tr:hover td {
+    transform: none;
   }
 }
