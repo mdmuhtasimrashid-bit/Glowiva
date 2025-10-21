@@ -136,6 +136,8 @@ const AppContent = () => {
               <AuthPage />
           } />
 
+
+
           {/* Default redirects */}
           <Route path="*" element={
             isAdmin ? <Navigate to="/" replace /> : <Navigate to="/employee/orders" replace />

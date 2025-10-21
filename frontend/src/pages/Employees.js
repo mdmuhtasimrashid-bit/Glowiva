@@ -172,10 +172,29 @@ const Employees = () => {
         setResettingCommission(true);
         const response = await employeesAPI.resetCommission(selectedEmployee._id);
         
-        toast.success(`✅ Commission reset successful!\n${response.data.message}\n${response.data.ordersUpdated} orders updated.`);
+        toast.success(`✅ Commission reset successful!\n${response.data.message}`);
         
-        // Refresh the salary data to show the reset
-        await viewEmployeeSalary(selectedEmployee);
+        // Update the selected employee with the new commission paid date
+        const updatedEmployee = {
+          ...selectedEmployee,
+          commissionPaidDate: response.data.resetDate
+        };
+        setSelectedEmployee(updatedEmployee);
+        
+        // Immediately update salary data with reset values
+        const updatedSalaryData = {
+          ...salaryData,
+          commissionEligibleOrderCount: 0,
+          totalCommission: 0,
+          commissionPaidDate: response.data.resetDate
+        };
+        setSalaryData(updatedSalaryData);
+        
+        // Refresh the employee list and salary data to ensure consistency
+        fetchEmployees();
+        setTimeout(async () => {
+          await viewEmployeeSalary(updatedEmployee);
+        }, 200);
         
       } catch (error) {
         console.error('Reset commission error:', error);
@@ -791,7 +810,7 @@ const Employees = () => {
                           Total Orders: {salaryData.orderCount}
                         </h4>
                         <h4 style={{ color: '#17a2b8', margin: '5px 0' }}>
-                          Unpaid Orders: {salaryData.commissionEligibleOrderCount || salaryData.orderCount}
+                          Unpaid Orders: {salaryData.commissionEligibleOrderCount !== undefined ? salaryData.commissionEligibleOrderCount : salaryData.orderCount}
                         </h4>
                         <h3 style={{ color: '#007bff', margin: '10px 0' }}>
                           Unpaid Commission: {formatCurrency(salaryData.totalCommission)}

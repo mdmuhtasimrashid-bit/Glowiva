@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Use proxy in development, full URL in production
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -44,6 +45,7 @@ export const employeesAPI = {
   getSalarySummary: (year, month) => api.get(`/employees/salary-summary/${year}/${month}`),
   getEmployeeOrders: (id, params = {}) => api.get(`/employees/${id}/orders`, { params }),
   resetCommission: (id) => api.post(`/employees/${id}/reset-commission`),
+  clearCommissionReset: (id) => api.post(`/employees/${id}/clear-commission-reset`),
   getPositions: () => api.get('/employees/meta/positions'),
   getDepartments: () => api.get('/employees/meta/departments'),
 };

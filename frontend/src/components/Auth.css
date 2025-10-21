@@ -39,9 +39,9 @@
     0 8px 25px rgba(0, 0, 0, 0.15),
     0 3px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 16px 12px;
+  padding: 32px 28px;
   width: 100%;
-  max-width: 180px;
+  max-width: 400px;
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
   overflow: hidden;
@@ -72,28 +72,28 @@
 
 .auth-header {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   position: relative;
 }
 
 .auth-header::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -12px;
   left: 50%;
   transform: translateX(-50%);
-  width: 20px;
-  height: 1px;
+  width: 40px;
+  height: 2px;
   background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 .auth-header h2 {
   color: #1a1a1a;
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 4px;
-  letter-spacing: -0.2px;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -102,17 +102,17 @@
 
 .auth-header p {
   color: #6b7280;
-  font-size: 13px;
+  font-size: 14px;
   margin: 0;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* Form Styles */
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -136,16 +136,16 @@
 .form-group label {
   font-weight: 600;
   color: #374151;
-  margin-bottom: 4px;
-  font-size: 11px;
+  margin-bottom: 6px;
+  font-size: 14px;
   letter-spacing: -0.1px;
 }
 
 .form-group input {
-  padding: 8px 10px;
+  padding: 12px 16px;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 8px;
+  font-size: 14px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: rgba(248, 250, 252, 0.9);
   backdrop-filter: blur(10px);
@@ -174,16 +174,16 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 6px;
+  margin-top: 8px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .auth-button::before {
@@ -370,15 +370,19 @@
     justify-content: center;
     min-height: 100vh;
     min-height: 100dvh; /* Dynamic viewport height for mobile */
+    background-attachment: scroll; /* Better performance on mobile */
   }
   
   .auth-card {
-    padding: 24px 20px;
+    padding: 28px 24px;
     max-width: 90vw;
-    min-width: 280px;
+    min-width: 320px;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
     margin: auto;
+    box-shadow: 
+      0 10px 40px rgba(0, 0, 0, 0.15),
+      0 4px 16px rgba(0, 0, 0, 0.1);
   }
   
   .auth-header h2 {
@@ -428,18 +432,22 @@
 /* Mobile phones - Small screens */
 @media (max-width: 480px) {
   .auth-container {
-    padding: 12px;
+    padding: 12px 8px;
     background-attachment: scroll; /* Better performance on mobile */
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 5vh;
   }
   
   .auth-card {
-    padding: 20px 16px;
-    border-radius: 10px;
+    padding: 24px 20px;
+    border-radius: 16px;
     max-width: 95vw;
     min-width: 300px;
     box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.15),
-      0 2px 8px rgba(0, 0, 0, 0.1);
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      0 4px 16px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(20px);
   }
   
   .auth-header {
@@ -519,8 +527,11 @@
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
   .auth-button {
-    min-height: 44px; /* Apple's recommended touch target size */
+    min-height: 48px; /* Apple's recommended touch target size */
     touch-action: manipulation;
+    font-size: 16px;
+    padding: 16px 24px;
+    border-radius: 12px;
   }
   
   .link-button {
@@ -529,12 +540,26 @@
     align-items: center;
     justify-content: center;
     touch-action: manipulation;
+    padding: 12px 16px;
   }
   
   .toggle-button {
-    min-height: 36px;
-    padding: 8px 12px;
+    min-height: 40px;
+    padding: 10px 16px;
     touch-action: manipulation;
+    border-radius: 8px;
+  }
+  
+  .form-group input {
+    min-height: 48px;
+    font-size: 16px !important;
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 }
 
@@ -580,5 +605,85 @@
 @supports (-webkit-touch-callout: none) {
   .form-group input {
     font-size: 16px !important;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .auth-card {
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+
+
+/* Ultra-wide screens */
+@media (min-width: 1920px) {
+  .auth-card {
+    max-width: 500px;
+    padding: 40px 36px;
+  }
+  
+  .auth-header h2 {
+    font-size: 28px;
+  }
+  
+  .form-group input {
+    font-size: 16px;
+    padding: 16px 20px;
+  }
+  
+  .auth-button {
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .auth-card {
+    animation: none;
+  }
+  
+  .auth-button::before {
+    transition: none;
+  }
+  
+  .auth-container::before {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.1s !important;
+    animation-duration: 0.1s !important;
+  }
+}
+
+/* Focus management for accessibility */
+.auth-form:focus-within .form-group:focus-within {
+  z-index: 10;
+  position: relative;
+}
+
+/* Better error state for mobile */
+@media (max-width: 480px) {
+  .error-message {
+    position: relative;
+    animation: mobileShake 0.5s ease-in-out;
+  }
+  
+  @keyframes mobileShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+}
+
+/* Safe area handling for iPhone X and newer */
+@supports (padding: max(0px)) {
+  .auth-container {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
   }
 }

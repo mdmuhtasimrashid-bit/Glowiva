@@ -90,12 +90,20 @@ router.post('/', auth, async (req, res) => {
     // For simplified form, total equals subtotal (no tax, shipping, discount)
     const total = subtotal;
     
+    // Determine which employee should get commission
+    let assignedEmployee = employeeId;
+    
+    // If no employee is specified but the order is created by an employee, assign to that employee
+    if (!assignedEmployee && req.userRole === 'employee') {
+      assignedEmployee = req.user._id;
+    }
+
     const order = new Order({
       customerName,
       customerEmail: '', // Default empty for simplified form
       customerPhone,
       customerAddress: '', // Default empty for simplified form
-      employee: employeeId || null, // Add employee if provided
+      employee: assignedEmployee, // Employee who gets commission
       createdBy: req.userRole === 'employee' ? req.user._id : null, // Track who created the order
       items: orderItems,
       subtotal,
@@ -161,13 +169,21 @@ router.put('/:id', auth, async (req, res) => {
     
     const total = subtotal;
     
+    // Determine which employee should get commission for updated order
+    let assignedEmployee = employeeId;
+    
+    // If no employee is specified but the order is being updated by an employee, assign to that employee
+    if (!assignedEmployee && req.userRole === 'employee') {
+      assignedEmployee = req.user._id;
+    }
+
     // Update the order
     const updatedOrder = await Order.findByIdAndUpdate(
       orderId,
       {
         customerName,
         customerPhone,
-        employee: employeeId || null,
+        employee: assignedEmployee,
         items: orderItems,
         subtotal,
         total,
@@ -305,7 +321,8 @@ router.get('/employee/my-orders', auth, async (req, res) => {
     }
 
     const { startDate, endDate } = req.query;
-    let filter = { createdBy: req.user._id };
+    // Use employee field to find orders assigned to this employee for commission
+    let filter = { employee: req.user._id };
     
     if (startDate || endDate) {
       filter.createdAt = {};
@@ -320,10 +337,27 @@ router.get('/employee/my-orders', auth, async (req, res) => {
     const orderCount = orders.length;
     const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
     
-    // Calculate commission based on employee's settings
+    // Calculate commission only for orders after the last commission reset date
     const employee = req.user;
+    let commissionEligibleOrders = orders;
+    
+    console.log(`Employee ${employee.fullName} commission calculation:`);
+    console.log(`Total orders assigned to employee: ${orders.length}`);
+    console.log(`Commission paid date: ${employee.commissionPaidDate}`);
+    
+    if (employee.commissionPaidDate) {
+      commissionEligibleOrders = orders.filter(order => 
+        new Date(order.createdAt) > new Date(employee.commissionPaidDate)
+      );
+      console.log(`Orders after reset date: ${commissionEligibleOrders.length}`);
+    } else {
+      console.log(`No reset date found, all orders eligible`);
+    }
+    
     const commissionAmount = employee.salaryToggle ? 
-      (orderCount * employee.commissionPerOrder) : 0;
+      (commissionEligibleOrders.length * employee.commissionPerOrder) : 0;
+      
+    console.log(`Final commission amount: ${commissionAmount}`);
     
     res.json({
       orders,
@@ -332,7 +366,9 @@ router.get('/employee/my-orders', auth, async (req, res) => {
         totalRevenue,
         commissionPerOrder: employee.commissionPerOrder,
         totalCommission: commissionAmount,
-        salaryToggleEnabled: employee.salaryToggle
+        commissionEligibleOrderCount: commissionEligibleOrders.length,
+        salaryToggleEnabled: employee.salaryToggle,
+        commissionPaidDate: employee.commissionPaidDate
       }
     });
   } catch (error) {

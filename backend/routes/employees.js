@@ -217,13 +217,22 @@ router.get('/:id/orders', async (req, res) => {
     
     // Calculate commission only for orders after the last commission reset date
     let commissionEligibleOrders = orders;
+    
+    console.log(`Admin view - Employee ${employee.fullName} commission calculation:`);
+    console.log(`Total orders: ${orders.length}`);
+    console.log(`Commission paid date: ${employee.commissionPaidDate}`);
+    
     if (employee.commissionPaidDate) {
       commissionEligibleOrders = orders.filter(order => 
         new Date(order.createdAt) > new Date(employee.commissionPaidDate)
       );
+      console.log(`Orders after reset date: ${commissionEligibleOrders.length}`);
+    } else {
+      console.log(`No reset date found, all orders eligible`);
     }
       
     const totalCommission = commissionEligibleOrders.length * (employee.commissionPerOrder || 0);
+    console.log(`Final commission amount: ${totalCommission}`);
     
     res.json({
       employee: {
@@ -316,29 +325,67 @@ router.post('/:id/reset-commission', adminAuth, async (req, res) => {
       return res.status(404).json({ message: 'Employee not found' });
     }
     
-    // Set commission paid date to current date to mark reset point
-    // This preserves order history while resetting future commission calculations
-    const resetDate = new Date();
-    await Employee.findByIdAndUpdate(id, {
+    // Set commission paid date to current moment to mark reset point
+    // Only orders created AFTER this moment will count for future commission
+    const resetDate = new Date(); // Current date and time
+    const updatedEmployee = await Employee.findByIdAndUpdate(id, {
       commissionPaidDate: resetDate
+    }, { new: true });
+    
+    // Count total orders and commission eligible orders after reset
+    const totalOrders = await Order.countDocuments({ employee: id });
+    
+    // After reset, commission eligible orders should be 0 since reset date is set to end of today
+    const commissionEligibleOrders = await Order.countDocuments({ 
+      employee: id,
+      createdAt: { $gt: resetDate }
     });
     
-    // Count orders that were assigned to this employee (for reporting)
-    const orderCount = await Order.countDocuments({ employee: id });
-    
     console.log(`Reset commission for ${employee.fullName}: Commission reset to date ${resetDate.toISOString()}`);
+    console.log(`Total orders: ${totalOrders}, Commission eligible orders after reset: ${commissionEligibleOrders}`);
     
     res.json({
       message: `Commission reset successfully for ${employee.fullName}`,
       resetDate: resetDate,
-      totalOrdersKept: orderCount,
+      totalOrdersKept: totalOrders,
+      commissionEligibleOrderCount: commissionEligibleOrders,
+      employee: {
+        id: employee._id,
+        name: employee.fullName,
+        commissionPaidDate: resetDate
+      }
+    });
+  } catch (error) {
+    console.error('Commission reset error:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Clear commission reset for testing (admin only)
+router.post('/:id/clear-commission-reset', adminAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const employee = await Employee.findById(id);
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+    
+    await Employee.findByIdAndUpdate(id, {
+      commissionPaidDate: null
+    });
+    
+    console.log(`Cleared commission reset for ${employee.fullName}`);
+    
+    res.json({
+      message: `Commission reset cleared for ${employee.fullName} - all orders now count toward commission`,
       employee: {
         id: employee._id,
         name: employee.fullName
       }
     });
   } catch (error) {
-    console.error('Commission reset error:', error);
+    console.error('Clear commission reset error:', error);
     res.status(500).json({ message: error.message });
   }
 });
